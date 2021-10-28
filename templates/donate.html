@@ -1,0 +1,205 @@
+<style>
+a:link {
+  color: black;
+  background-color: transparent;
+  text-decoration: none;
+}
+
+a:visited {
+  color: black;
+  background-color: transparent;
+  text-decoration: none;
+}
+
+a:hover {
+  color: #FF8C00;
+  background-color: transparent;
+  text-decoration: underline;
+}
+
+a:active {
+  color: #FFF44F;
+  background-color: transparent;
+  text-decoration: underline;
+}
+
+.navigationtab { background-color: #5C5276; height: 65px; }
+
+
+/* FreshFit */
+.navigationtab a { float: left; color: black; text-align: center;  border: 2px dashed #5C5276; text-decoration: none; }
+
+.navigationtab a:hover, .dropdown:hover .dropbtn { background-color: black; color: black; border: 2px dashed black; }
+
+h1 {
+  text-align: center;
+  background-color: black;
+  size: 120px;
+  color: #58cced;
+  width: 135px;
+  border: 2px dashed #DCDDDC;
+  border-radius: 0px 0px 0px 0px;
+  margin: 10;
+}
+h1:hover {text-decoration: underline #FF47A9; border: 2px dashed #FFF44F; }
+
+
+/* search bar */
+.navigationtab form { float: left; color: black; text-align: center; margin-top: 22px; margin-left: 22px; }
+
+
+/* Account dropdown */
+.dropdown { float: right; overflow: hidden; color: black; text-align: center; text-decoration: none; }
+
+.dropdown .dropbtn {
+  float: right;
+  font-size: 16px;
+  border: 2px;
+  outline: none;
+  color: white;
+  padding: 21.5px;
+  background-color: inherit;
+  font-family: inherit;
+  display: block;
+}
+
+
+
+.dropdown-content {
+  display: none;
+  float: right;
+  background-color: #F6F6F6;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+}
+
+
+.dropdown-content a {
+  float: none;
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+  text-align: right;
+}
+.dropdown-content a:hover {
+  background-color: white;
+}
+
+
+.dropdown:hover .dropdown-content {
+  display: block;
+}
+
+h2 {
+  text-align: center;
+  color: black;
+  border: 2px dashed #DCDDDC;
+  border-radius: 0px 0px 0px 0px;
+}
+
+</style>
+
+<html>
+    <body>
+
+  <div class="navigationtab">
+
+    <! FreshFit >
+    <a href="/"><h1>Fresh<span style="color:#F6F6F6">Fit</span></h1></a>
+
+    {% if message %}
+      <p class="error"><strong>Message:</strong> {{ message }}</p>
+    {% endif %}
+
+    <! search button to... somewhere. >
+    <form action="/explore_marketplace", method="post">
+      <input type="text" name="search" placeholder="Search listings by name"/>
+      <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+      <input type="submit" value="Search"/>
+    </form>
+
+      <! dropdown menu >
+      <div class="dropdown">
+        <button class="dropbtn"><span style="color:#F6F6F6">Account</span> 
+          <i class="fa fa-caret-down"></i>
+        </button>
+        <div/>
+        <div class="dropdown-content" style="right:0">
+          {% if designer == true %}
+            <a href="/renew">Renew your subscription</a>
+            <a href="/manage_page">Manage your page</a>
+            <a href="/post_listing">Post a listing</a>
+            {% endif %}
+          {% if designer == false %}
+            <a href="/subscribe">Subscribe</a>
+            <a href="/donate">Donate</a>
+            <a href="/explore_marketplace">Explore marketplace</a>
+            {% endif %}
+          <a href='/logout'>Log out</a></div>
+        </div>
+      </div>
+  </div>
+
+        <h2>Donate</h2>
+        <div style="text-align: center">
+            {% if type %}
+                <form action='/donate_form' method='POST'>
+                    <select name="category" required>
+                        <option value="T-Shirt">T-Shirt</option>
+                        <option value="Button-Up">Button-Up</option>
+                        <option value="Sweatshirt">Sweatshirt</option>
+                        <option value="Knit">Knit</option>
+                        <option value="Casual-Pant">Casual-Pant</option>
+                        <option value="Dress-Pant">Dress-Pant</option>
+                        <option value="Denim">Denim</option>
+                        <option value="Short">Short</option>
+                        <option value="Outerwear">Outerwear</option>
+                        <option value="Accessory">Accessory</option>
+                        <option value="Other">Other</option>
+                        <option value="Footwear">Footwear</option>
+                    </select>
+                    <br>
+                    <input type="text" name="color" placeholder="Color" required/>
+                    <br>
+                    <select name="size" required>
+                        <option value="XS">XS</option>
+                        <option value="S">S</option>
+                        <option value="M">M</option>
+                        <option value="L">L</option>
+                        <option value="XL">XL</option>
+                    </select>
+                    <br>
+                    <textarea name="description" rows="5" cols="100" maxLength=500>Description (max length 500 characters)</textarea>
+                    <br>
+                    {% if type == 'pool' %}
+                        <input type='hidden' name='type' value='pool'/>
+                    {% elif type == 'designer' %}
+                        <input type='hidden' name='type' value='designer'/>
+                        <input type='text' name='designer' placeholder="Designer" required/>
+                    {% elif type == 'charity' %}
+                        <input type='hidden' name='type' value='charity'/>
+                        <input type='text' name='charity' placeholder="Charity" required/>
+                    {% endif %}
+                    <input type="hidden" name="user" value="{{ user }}"/>
+                    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+                    <input type="submit" value="Submit">
+                </form>
+            {% else %}
+            <form action='/donation_type_form' method='POST'>
+                <select name='type'>
+                    <option value='pool'>Pool</option>
+                    <option value='designer'>Designer</option>
+                    <option value='charity'>Charity</option>
+                </select>
+                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+                <input type='submit' value='Submit'>
+            </form>
+            {% endif %}
+        </div>
+        {% if error %}
+            <p class="error"><strong>Error:</strong> {{error}}</p>
+        {% endif %}
+    </body>
+</html>

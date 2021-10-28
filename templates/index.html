@@ -1,0 +1,61 @@
+<style>
+a:link {
+  color: black;
+  background-color: transparent;
+  text-decoration: none;
+}
+
+a:visited {
+  color: black;
+  background-color: transparent;
+  text-decoration: none;
+}
+
+a:hover {
+  color: #FF8C00;
+  background-color: transparent;
+  text-decoration: underline;
+}
+
+a:active {
+  color: #FFF44F;
+  background-color: transparent;
+  text-decoration: underline;
+}
+
+
+
+h1 {
+  text-align: center;
+  background-color: black;
+  size: 120px;
+  color: #58cced;
+  width: 135px;
+  border: 2px dashed #DCDDDC;
+  border-radius: 0px 0px 0px 0px;
+}
+h1:hover {text-decoration: underline #FF47A9; border: 2px dashed #FFF44F; }
+
+h2 {
+  color: black;
+  float: left;
+  border: 2px dashed #DCDDDC;
+  border-radius: 0px 0px 0px 0px;
+}
+
+</style>
+<html>
+	<body>
+    <! FreshFit >
+    <div style="text-align: center"><a href="/"><h1>Fresh<span style="color:#F6F6F6">Fit</span></h1></a></div>
+
+    {% if message %}
+      <p class="error"><strong>Message:</strong> {{ message }}</p>
+    {% endif %}
+		<div style="text-align: center">
+			<a href="/register"><big>Register</big></a>
+			<br>
+			<a href="/login"><big>Log in</big></a>
+		</div>
+	</body>
+</html>

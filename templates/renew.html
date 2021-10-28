@@ -1,0 +1,163 @@
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color:background" content="#f6f6f6"/>
+<style>
+a:link {
+  color: black;
+  background-color: transparent;
+  text-decoration: none;
+}
+
+a:visited {
+  color: black;
+  background-color: transparent;
+  text-decoration: none;
+}
+
+a:hover {
+  color: #FF8C00;
+  background-color: transparent;
+  text-decoration: underline;
+}
+
+a:active {
+  color: #FFF44F;
+  background-color: transparent;
+  text-decoration: underline;
+}
+
+.navigationtab { background-color: #5C5276; height: 65px; }
+
+
+/* FreshFit */
+.navigationtab a { float: left; color: black; text-align: center;  border: 2px dashed #5C5276; text-decoration: none; }
+
+.navigationtab a:hover, .dropdown:hover .dropbtn { background-color: black; color: black; border: 2px dashed black; }
+
+h1 {
+  text-align: center;
+  background-color: black;
+  size: 120px;
+  color: #58cced;
+  width: 135px;
+  border: 2px dashed #DCDDDC;
+  border-radius: 0px 0px 0px 0px;
+  margin: 10;
+}
+h1:hover {text-decoration: underline #FF47A9; border: 2px dashed #FFF44F; }
+
+
+/* search bar */
+.navigationtab form { float: left; color: black; text-align: center; margin-top: 22px; margin-left: 22px; }
+
+
+/* Account dropdown */
+.dropdown { float: right; overflow: hidden; color: black; text-align: center; text-decoration: none; }
+
+.dropdown .dropbtn {
+  float: right;
+  font-size: 16px;
+  border: 2px;
+  outline: none;
+  color: white;
+  padding: 21.5px;
+  background-color: inherit;
+  font-family: inherit;
+  display: block;
+}
+
+
+
+.dropdown-content {
+  display: none;
+  float: right;
+  background-color: #F6F6F6;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+}
+
+
+.dropdown-content a {
+  float: none;
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+  text-align: right;
+}
+.dropdown-content a:hover {
+  background-color: white;
+}
+
+
+.dropdown:hover .dropdown-content {
+  display: block;
+}
+
+h2 {
+  text-align: center;
+  color: black;
+  border: 2px dashed #DCDDDC;
+  border-radius: 0px 0px 0px 0px;
+}
+
+</style>
+
+<html>
+    <body>
+  <div class="navigationtab">
+
+    <! FreshFit >
+    <a href="/"><h1>Fresh<span style="color:#F6F6F6">Fit</span></h1></a>
+
+    {% if message %}
+      <p class="error"><strong>Message:</strong> {{ message }}</p>
+    {% endif %}
+
+    <! search button to... somewhere. >
+    <form action="/explore_marketplace", method="post">
+      <input type="text" name="search" placeholder="Search listings by name"/>
+      <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+      <input type="submit" value="Search"/>
+    </form>
+
+      <! dropdown menu >
+      <div class="dropdown">
+        <button class="dropbtn"><span style="color:#F6F6F6">Account</span> 
+          <i class="fa fa-caret-down"></i>
+        </button>
+        <div/>
+        <div class="dropdown-content" style="right:0">
+          {% if designer == true %}
+            <a href="/renew">Renew your subscription</a>
+            <a href="/manage_page">Manage your page</a>
+            <a href="/post_listing">Post a listing</a>
+            {% endif %}
+          {% if designer == false %}
+            <a href="/subscribe">Subscribe</a>
+            <a href="/donate">Donate</a>
+            <a href="/explore_marketplace">Explore marketplace</a>
+            {% endif %}
+          <a href='/logout'>Log out</a></div>
+        </div>
+      </div>
+  </div>
+
+          <h2 style="text-align: center;">Renew Your Designer Subscription</h2>
+        <div style="text-align: center;">
+            <form action="/renew_form" method="post">
+                <label for="period">Renew your subscription:</label>
+                <select name="period">
+                    <option value="1">1 month</option>
+                    <option value="6">6 months</option>
+                    <option value="12">12 months</option>
+                </select>
+                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+                <input type="submit">
+            </form>
+        </div>
+        {% if error %}
+            <p class="error"><strong>Error:</strong> {{error}}</p>
+        {% endif %}
+    </body>
+</html>

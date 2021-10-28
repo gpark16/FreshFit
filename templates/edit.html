@@ -1,0 +1,24 @@
+<div class="navigationcontent">
+			<h2>Edit Your Listing</h2>
+            <img src="{{listing.filepath}}" width=300>
+			<form action="/edit_listing/{{listing.id}}" method="POST" enctype="multipart/form-data">
+                <br>
+                <label>Name: </label>{{ listing.name }}
+                <input style="width:200px" type="text" id="name" name="name"><br><br>
+        		<label>Description: {{ listing.description }}</label>
+                <input style="width:200px" type="text" id="description" name="description"><br><br>
+                <label>Price: ${{ listing.price }}</label>
+                <input style="width:200px" type="text" id="price" name="price"><br><br>
+                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+                <input type="submit" value="Update">
+			</form>
+			<p style="color: red">
+				{{ error }}
+			</p>
+			<p style="color: green">
+				{{ success }}
+			</p>
+            <a href="/">Back to home</a>
+		</div>
+	</body>
+</html>
